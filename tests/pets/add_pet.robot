@@ -1,11 +1,20 @@
+Language: pt-br
 *** Settings ***
+Documentation    Suite responsável por validar o endpoint de cadastro de Pets na API Petstore.
+...              Inclui geração dinâmica de dados e verificação completa do payload de resposta.
+
 Resource    ../../resources/keywords.robot
+Resource    ../../resources/assertions.robot
+
 
 *** Test Cases ***
-Adicionar novo pet com sucesso
-    [Tags]    pet    post
-    Create Petstore Session
-    ${body}=    Create Dictionary    id=12345    name=Rex    status=available
-    ${response}=    POST On Session    petstore    /pet    json=${body}
-    Should Be Equal As Integers    ${response.status_code}    200
-    Should Contain    ${response.text}    Rex
+1 - Adicionar novo pet com sucesso
+    [Documentation]    Realiza a adição de um novo pet, com dados dinâmicos e faz a validação do Staus Code e o corpo da resposta.
+    [Tags]    1    pet    positive
+
+    ${petData}    Dado que possua dados para cadastrar um novo pet  
+
+    ${response}   Quando submeto o request do cadastro    ${petData}
+
+    Então devo validar a adicao com sucesso    ${response}        ${petData}
+

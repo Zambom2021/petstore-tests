@@ -1,2 +1,4 @@
 robotframework==7.0
 robotframework-requests==0.9.6
+robotframework-faker
+robotframework-jsonlibrary
