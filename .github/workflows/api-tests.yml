@@ -1,0 +1,32 @@
+name: API Tests
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      petstore:
+        image: swaggerapi/petstore3
+        ports:
+          - 8080:8080
+
+    steps:
+      - name: Checkout tests repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Robot tests
+        run: robot tests/
