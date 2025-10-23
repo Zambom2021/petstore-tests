@@ -17,7 +17,7 @@ Resource    ../../resources/assertions.robot
 
     ${response}   Quando submeto a alteração do status para "available"    ${respPetData}    
 
-    Então devo validar a alteração com sucesso    ${response}        ${respPetData}    
+    Então devo validar a alteração do Status    ${response}        ${respPetData}    
 
 2 - Alterar o status de disponivel para vendido de um pet já existente
     [Documentation]    Realiza a alteração do status de um pet já cadastrado e faz a validação do Staus Code e o corpo da resposta.
@@ -29,4 +29,4 @@ Resource    ../../resources/assertions.robot
 
     ${response}   Quando submeto a alteração do status para "sold"    ${petData}    
 
-    Então devo validar a alteração com sucesso    ${response}        ${respPetData}    
+    Então devo validar a alteração do Status    ${response}        ${respPetData}    

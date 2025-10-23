@@ -29,12 +29,47 @@ que possua dados para cadastrar um novo pet
     RETURN    ${petData}
 
 submeto o cadastro 
-    [Arguments]    ${petData} 
+    [Arguments]    ${petData}     
 
     Create Petstore Session
     ${response}=    POST On Session    petstore    /pet    json=${petData}
 
-    RETURN     ${response}        
+    RETURN     ${response}   
+
+submeto o cadastro com o campo "${data_EMPTY}" vazio 
+    [Arguments]    ${petData}       
+      
+    IF     $data_EMPTY == "photos_urls"
+        ${newPetData}=     Create Dictionary         
+        ...    id=${petData["id"]}
+        ...    name=${petData["name"]}
+        ...    category=${petData["category"]}
+        ...    tags=${petData["tags"]}
+        ...    status=${PENDING} 
+
+    ELSE IF     $data_EMPTY == "tags"
+        ${newPetData}=     Create Dictionary  
+        ...    id=${petData["id"]}
+        ...    name=${petData["name"]}
+        ...    category=${petData["category"]}
+        ...    photoUrls=${petData["photoUrls"]}
+        ...    status=${PENDING} 
+    
+    ELSE IF    $data_EMPTY == "category"
+        ${invalid_category}=    Create Dictionary    id=    name=
+        ${newPetData}=     Create Dictionary  
+        ...    id=${petData["id"]}
+        ...    name=${petData["name"]}
+        ...    category=${invalid_category}
+        ...    photoUrls=${petData["photoUrls"]}
+        ...    tags=${petData["tags"]}
+        ...    status=${PENDING} 
+    END
+
+    Create Petstore Session
+    ${response}=    POST On Session    petstore    /pet    json=${newPetData}
+
+    RETURN     ${response}      
 
 que consulte um pet já existente pelo status
     [Arguments]    ${petStatus}
@@ -56,7 +91,6 @@ consulte o pet pelo ID
 
     RETURN     ${petData} 
 
-
 submeto a alteração do status para "${status}"
     [Arguments]    ${petData}    
 
@@ -73,9 +107,7 @@ submeto a alteração do status para "${status}"
 
     RETURN     ${response}
 
-
 que exista um pet cadastrado com Status "${status}" 
-    # [Arguments]    ${status}
     
     ${petData}    que possua dados para cadastrar um novo pet     ${status} 
 
