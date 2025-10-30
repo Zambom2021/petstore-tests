@@ -28,5 +28,12 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run Robot tests
-        run: robot tests/
+      - name: Run API tests
+        run: robot -d ./logs tests/
+      
+      - name: Publish Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: robot-results
+          path: logs/
