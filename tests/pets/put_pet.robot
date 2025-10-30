@@ -11,9 +11,9 @@ Resource    ../../resources/assertions.robot
     [Documentation]    Realiza a alteração do status de um pet já cadastrado e faz a validação do Staus Code e o corpo da resposta.
     [Tags]    1    pet    positive
 
-    ${petData}    Dado que exista um pet cadastrado com Status "pending"    
+    ${petData}    Dado que exista um pet cadastrado com Status    ${PENDING}     ${CATS}   
 
-    ${respPetData}    E consulte o pet pelo ID    ${petData['id']}  
+    ${respPetData}    E consultar o pet pelo ID    ${petData['id']}  
 
     ${response}   Quando submeto a alteração do status para "available"    ${respPetData}    
 
@@ -23,10 +23,22 @@ Resource    ../../resources/assertions.robot
     [Documentation]    Realiza a alteração do status de um pet já cadastrado e faz a validação do Staus Code e o corpo da resposta.
     [Tags]    2    pet    positive
 
-    ${petData}    Dado que exista um pet cadastrado com Status "available"    
+    ${petData}    Dado que exista um pet cadastrado com Status     ${AVAILABLE}   ${CATS}      
 
-    ${respPetData}    E consulte o pet pelo ID    ${petData['id']}   
+    ${respPetData}    E consultar o pet pelo ID    ${petData['id']}   
 
     ${response}   Quando submeto a alteração do status para "sold"    ${petData}    
+
+    Então devo validar a alteração do Status    ${response}        ${respPetData}    
+
+3 - Alterar o status de vendido para disponivel de um pet já existente
+    [Documentation]    Realiza a alteração do status de um pet já cadastrado e faz a validação do Staus Code e o corpo da resposta.
+    [Tags]    2    pet    positive
+
+    ${petData}    Dado que exista um pet cadastrado com Status     ${SOLD}    ${CATS}      
+
+    ${respPetData}    E consultar o pet pelo ID    ${petData['id']}   
+
+    ${response}   Quando submeto a alteração do status para "available"    ${petData}    
 
     Então devo validar a alteração do Status    ${response}        ${respPetData}    

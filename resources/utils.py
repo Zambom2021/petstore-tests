@@ -39,6 +39,7 @@ def gera_tags():
     tag_escolhida = random.choice(tags_possiveis)
     return [{"id": random.randint(1, 100), "name": tag_escolhida}]
 
+
 # Executa apenas se o arquivo for chamado diretamente
 # if __name__ == "__main__":
 #     nome_pet = gera_pet_name()

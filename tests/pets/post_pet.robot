@@ -12,7 +12,7 @@ Resource    ../../resources/assertions.robot
     [Documentation]    Realiza a adição de um novo pet com status disponivel, com dados dinâmicos e faz a validação do Staus Code e o corpo da resposta.
     [Tags]    1    pet    positive
 
-    ${petData}    Dado que possua dados para cadastrar um novo pet     ${AVAILABLE} 
+    ${petData}    Dado que possua dados para cadastrar um novo pet     ${AVAILABLE}    ${BIRDS} 
 
     ${response}   Quando submeto o cadastro    ${petData}    
 
@@ -22,7 +22,7 @@ Resource    ../../resources/assertions.robot
     [Documentation]    Realiza a adição de um novo pet com status pendente, com dados dinâmicos e faz a validação do Staus Code e o corpo da resposta.
     [Tags]    2    pet    positive
 
-    ${petData}    Dado que possua dados para cadastrar um novo pet    ${PENDING}      
+    ${petData}    Dado que possua dados para cadastrar um novo pet    ${PENDING}    ${DOGS}      
 
     ${response}   Quando submeto o cadastro    ${petData}
 
@@ -32,7 +32,7 @@ Resource    ../../resources/assertions.robot
     [Documentation]    Realiza a adição de um novo pet com status vendido, com dados dinâmicos e faz a validação do Staus Code e o corpo da resposta.
     [Tags]    3    pet    positive
 
-    ${petData}    Dado que possua dados para cadastrar um novo pet    ${SOLD}      
+    ${petData}    Dado que possua dados para cadastrar um novo pet    ${SOLD}    ${DOGS}          
 
     ${response}   Quando submeto o cadastro    ${petData}
 
@@ -42,7 +42,7 @@ Resource    ../../resources/assertions.robot
     [Documentation]    Realiza a adição de um novo pet com status pendente e campo Photos_Url Vazio e faz a validação da resposta
     [Tags]    4    pet    positive
 
-    ${petData}    Dado que possua dados para cadastrar um novo pet    ${PENDING}            
+    ${petData}    Dado que possua dados para cadastrar um novo pet    ${PENDING}    ${CATS}            
 
     ${response}   Quando submeto o cadastro com o campo "photos_urls" vazio     ${petData}   
 
@@ -52,7 +52,7 @@ Resource    ../../resources/assertions.robot
     [Documentation]    Realiza a adição de um novo pet com status pendente e campo Tags Vazio e faz a validação da resposta
     [Tags]    5    pet    positive
 
-    ${petData}    Dado que possua dados para cadastrar um novo pet    ${PENDING}            
+    ${petData}    Dado que possua dados para cadastrar um novo pet    ${PENDING}    ${CATS}             
 
     ${response}   Quando submeto o cadastro com o campo "tags" vazio     ${petData}   
 
@@ -62,7 +62,7 @@ Resource    ../../resources/assertions.robot
     [Documentation]    Realiza a adição de um novo pet com status pendente e campo Category Vazio e faz a validação da resposta
     [Tags]    6    pet    positive
 
-    ${petData}    Dado que possua dados para cadastrar um novo pet    ${PENDING}            
+    ${petData}    Dado que possua dados para cadastrar um novo pet    ${PENDING}    ${BIRDS}             
 
     ${response}   Quando submeto o cadastro com o campo "category" vazio     ${petData}   
 
