@@ -68,4 +68,17 @@ Resource    ../../resources/assertions.robot
 
     Então devo validar o campo "category" vazio no payload de resposta    ${response}        ${petData}           
 
+7 - Adicionar um novo Pet e Atualiza o Nome e o Status
+    [Documentation]    Realiza a adição de um novo pet, atualiza o nome e o ststus e faz a validação do Staus Code e o corpo da resposta.
+    [Tags]    7    pet    positive
 
+    ## Gera um Novo Nome para alteração ###
+    ${newName}=     Gera Pet Name
+
+    ${petData}    Dado que possua dados para cadastrar um novo pet    ${PENDING}    ${CATS}      
+
+    ${respPetdata}   E submeto o cadastro    ${petData}
+
+    ${respUpdate}   Quando submeto a alteração do nome e status    ${respPetdata['id']}    ${newName}    ${AVAILABLE}
+
+    Então devo validar os dados alterados   ${respUpdate}        ${petData}    

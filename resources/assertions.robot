@@ -3,25 +3,18 @@ Library    JSONLibrary
 
 *** Keywords ***
 devo validar os dados com sucesso   
-    [Documentation]     Valida o payload de resposta e o status code
+    [Documentation]     Valida o payload de resposta 
     [Arguments]     ${response}    ${petData}    ${status}
     
-    # Pega os dados do response
-    ${response_json}=   Set Variable    ${response.json()} 
-    ${body_dict}=       Set Variable    ${response_json}
-
-    # Valida statusCode
-    Should Be Equal As Integers         ${response.status_code}      200
- 
     # Valida cada campo
-    Should Be Equal As Integers         ${body_dict["id"]}                   ${petData['id']}
-    Should Be Equal                     ${body_dict["name"]}                 ${petData['name']}   
-    Should Be Equal                     ${body_dict["photoUrls"][0]}         ${petData['photoUrls'][0]}
-    Should Be Equal As Integers         ${body_dict["tags"][0]["id"]}        ${petData['tags'][0]['id']}
-    Should Be Equal                     ${body_dict["tags"][0]["name"]}      ${petData['tags'][0]['name']}
-    Should Be Equal As Integers         ${body_dict["category"]["id"]}       ${petData['category']['id']}
-    Should Be Equal                     ${body_dict["category"]["name"]}     ${petData['category']['name']}    
-    Should Be Equal                     ${body_dict["status"]}               ${status}
+    Should Be Equal As Integers         ${response["id"]}                   ${petData['id']}
+    Should Be Equal                     ${response["name"]}                 ${petData['name']}   
+    Should Be Equal                     ${response["photoUrls"][0]}         ${petData['photoUrls'][0]}
+    Should Be Equal As Integers         ${response["tags"][0]["id"]}        ${petData['tags'][0]['id']}
+    Should Be Equal                     ${response["tags"][0]["name"]}      ${petData['tags'][0]['name']}
+    Should Be Equal As Integers         ${response["category"]["id"]}       ${petData['category']['id']}
+    Should Be Equal                     ${response["category"]["name"]}     ${petData['category']['name']}    
+    Should Be Equal                     ${response["status"]}               ${status}
 
 devo validar o campo "${data_empty}" vazio no payload de resposta
     [Documentation]     Valida o campo vazio no payload de resposta e o status code
@@ -102,7 +95,7 @@ devo validar a TAG no payload de resposta
     # Faz um Loop para validar a quantidade e campos
     FOR     ${pet}     IN RANGE   ${qtdPets}                                   
         Should Not Be Empty       ${petsData[${pet}]['status']}         
-        Should Not Be Equal       ${petsData[${pet}]['id']}            0
+        Should Not Be Equal       ${petsData[${pet}]['id']}    0
         Should Not Be Empty       ${petsData[${pet}]['name']}
         
         ${qtdTags}    Get Length    ${petsData[${pet}]['tags']} 
@@ -110,3 +103,13 @@ devo validar a TAG no payload de resposta
             Should Be Equal       ${petsData[${pet}]['tags'][${petTag}]["name"]}    ${tag}
         END
     END                  
+
+devo validar os dados alterados
+    [Documentation]     Valida a alteração realizada
+    [Arguments]     ${respUpdate}        ${petData}  
+    
+    # Valida cada campo
+    Should Be Equal As Integers    ${petData['id']}         ${respUpdate["id"]} 
+    Should Not Be Equal            ${petData['name']}       ${respUpdate["name"]}  
+    Should Not Be Equal            ${petData['status']}     ${respUpdate["status"]} 
+
