@@ -1,8 +1,10 @@
 
 *** Settings ***
 Library    RequestsLibrary
+Library    OperatingSystem
 Library    ../resources/utils.py
 Library    ../resources/categories.py
+Library    ../resources/pet_images.py
 Library    Collections
 Resource   variables.robot
 
@@ -159,4 +161,48 @@ submeto a alteração do nome e status
 
     RETURN     ${respUpd}
 
+submeto o upload da imagem
+    [Arguments]    ${petData}    ${Category}   
+
+    ${file_path}=   Get Image By Category    ${Category}
+    ${petId}        Set Variable             ${petData['id']} 
+    ${petName}      Set Variable             ${petData['name']} 
+
+    Create Petstore Session
+    ${headers}=    Create Dictionary    accept=application/json    content-Type=application/octet-stream    
+    ${files}=      Create Dictionary    file=${file_path}
     
+    ${response}=    POST On Session    petstore    url=/pet/${petId}/uploadImage     headers=${headers}     files=${files}    
+
+    Should Be Equal As Integers    ${response.status_code}    200
+
+    ${respUpd}=    Set Variable    ${response.json()} 
+
+    ${images_dir}=  Set Variable    D:/Projetos_QA/Projects_Robot/PetStore/petstore/petstore-tests/images
+    ${target_path}=    Set Variable    ${images_dir}/${petName}.jpg
+    Copy File    ${file_path}    ${target_path}
+
+    # Atualiza diretamente a URL da foto no dicionário usando update real
+    ${photoUrls}=   Get From Dictionary    ${respUpd}    photoUrls
+    Set List Value    ${photoUrls}    0     ${target_path.replace("\\","/")}   
+    Set To Dictionary    ${respUpd}    photoUrls    ${photoUrls}   
+
+    # Log     ${respUpd}
+    # Log    <b>Imagem enviada:</b><br><img src="${target_path}" width="250px">    html=True
+
+    RETURN     ${respUpd}
+
+executo a exclusao do pet pelo ID
+    [Arguments]    ${petId}
+
+    Create Petstore Session
+    ${headers}=    Create Dictionary    accept=*/*    api_key=special-key  
+
+    ${response}=    DELETE On Session    petstore    url=/pet/${petId}    headers=${headers}    expected_status=anything 
+
+    # Valida o Status Code da resposta
+    Should Be Equal As Integers    ${response.status_code}           200   
+    
+    ${petData}    Set Variable    ${response.text}    
+
+    RETURN     ${petData}   

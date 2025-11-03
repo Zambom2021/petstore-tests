@@ -7,7 +7,7 @@ Resource    ../../resources/assertions.robot
 
 
 *** Test Cases ***
-1 - Alterar o status de pendente para disponível de um pet já existente
+1 - Deve Alterar o status de pendente para disponível de um pet já existente
     [Documentation]    Realiza a alteração do status de um pet já cadastrado e faz a validação do Staus Code e o corpo da resposta.
     [Tags]    1    pet    positive
 
@@ -19,7 +19,7 @@ Resource    ../../resources/assertions.robot
 
     Então devo validar a alteração do Status    ${response}        ${respPetData}    
 
-2 - Alterar o status de disponivel para vendido de um pet já existente
+2 - Deve Alterar o status de disponivel para vendido de um pet já existente
     [Documentation]    Realiza a alteração do status de um pet já cadastrado e faz a validação do Staus Code e o corpo da resposta.
     [Tags]    2    pet    positive
 
@@ -31,7 +31,7 @@ Resource    ../../resources/assertions.robot
 
     Então devo validar a alteração do Status    ${response}        ${respPetData}    
 
-3 - Alterar o status de vendido para disponivel de um pet já existente
+3 - Deve Alterar o status de vendido para disponivel de um pet já existente
     [Documentation]    Realiza a alteração do status de um pet já cadastrado e faz a validação do Staus Code e o corpo da resposta.
     [Tags]    2    pet    positive
 

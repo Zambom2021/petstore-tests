@@ -6,9 +6,11 @@ Documentation    Suite responsável por validar o endpoint de Adição de Pets n
 Resource    ../../resources/keywords.robot
 Resource    ../../resources/assertions.robot
 
+*** Variables ***
+${newName}=     Gera Pet Name
 
 *** Test Cases ***
-1 - Adicionar novo pet com Status disponivel com sucesso
+1 - Deve Adicionar novo pet com Status disponivel com sucesso
     [Documentation]    Realiza a adição de um novo pet com status disponivel, com dados dinâmicos e faz a validação do Staus Code e o corpo da resposta.
     [Tags]    1    pet    positive
 
@@ -18,7 +20,7 @@ Resource    ../../resources/assertions.robot
 
     Então devo validar os dados com sucesso    ${response}        ${petData}    ${AVAILABLE}
 
-2 - Adicionar novo pet com Status pendente com sucesso
+2 - Deve Adicionar novo pet com Status pendente com sucesso
     [Documentation]    Realiza a adição de um novo pet com status pendente, com dados dinâmicos e faz a validação do Staus Code e o corpo da resposta.
     [Tags]    2    pet    positive
 
@@ -28,7 +30,7 @@ Resource    ../../resources/assertions.robot
 
     Então devo validar os dados com sucesso    ${response}        ${petData}    ${PENDING}
 
-3 - Adicionar novo pet com Status vendido com sucesso
+3 - Deve Adicionar novo pet com Status vendido com sucesso
     [Documentation]    Realiza a adição de um novo pet com status vendido, com dados dinâmicos e faz a validação do Staus Code e o corpo da resposta.
     [Tags]    3    pet    positive
 
@@ -38,7 +40,7 @@ Resource    ../../resources/assertions.robot
 
     Então devo validar os dados com sucesso    ${response}        ${petData}    ${SOLD}
 
-4 - Adicionar novo pet com campo photos_urls vazio
+4 - Deve Adicionar novo pet com campo photos_urls vazio
     [Documentation]    Realiza a adição de um novo pet com status pendente e campo Photos_Url Vazio e faz a validação da resposta
     [Tags]    4    pet    positive
 
@@ -48,7 +50,7 @@ Resource    ../../resources/assertions.robot
 
     Então devo validar o campo "photos_urls" vazio no payload de resposta    ${response}        ${petData}        
 
-5 - Adicionar novo pet com campo Tags vazio
+5 - Deve Adicionar novo pet com campo Tags vazio
     [Documentation]    Realiza a adição de um novo pet com status pendente e campo Tags Vazio e faz a validação da resposta
     [Tags]    5    pet    positive
 
@@ -58,7 +60,7 @@ Resource    ../../resources/assertions.robot
 
     Então devo validar o campo "tags" vazio no payload de resposta    ${response}        ${petData}  
 
-6 - Adicionar novo pet com campo Category vazio
+6 - Deve Adicionar novo pet com campo Category vazio
     [Documentation]    Realiza a adição de um novo pet com status pendente e campo Category Vazio e faz a validação da resposta
     [Tags]    6    pet    positive
 
@@ -68,12 +70,10 @@ Resource    ../../resources/assertions.robot
 
     Então devo validar o campo "category" vazio no payload de resposta    ${response}        ${petData}           
 
-7 - Adicionar um novo Pet e Atualiza o Nome e o Status
+7 - Deve Adicionar um novo Pet e Atualiza o Nome e o Status
     [Documentation]    Realiza a adição de um novo pet, atualiza o nome e o ststus e faz a validação do Staus Code e o corpo da resposta.
     [Tags]    7    pet    positive
-
-    ## Gera um Novo Nome para alteração ###
-    ${newName}=     Gera Pet Name
+ 
 
     ${petData}    Dado que possua dados para cadastrar um novo pet    ${PENDING}    ${CATS}      
 
@@ -81,4 +81,14 @@ Resource    ../../resources/assertions.robot
 
     ${respUpdate}   Quando submeto a alteração do nome e status    ${respPetdata['id']}    ${newName}    ${AVAILABLE}
 
-    Então devo validar os dados alterados   ${respUpdate}        ${petData}    
+    Então devo validar os dados alterados   ${respUpdate}        ${petData}  
+
+8 - Deve Fazer o Upload de Imagem para um Pet e atualiza a photUrl  
+    [Documentation]    Realiza o Upload de imagem para um Pet e atualiza a photUrl pelo ID e faz a validação da resposta.
+    [Tags]    8    pet    positive
+   
+    ${petData}    Dado que exista um pet cadastrado com Status     ${PENDING}    ${CATS}    
+
+    ${respPetData}    Quando submeto o upload da imagem    ${petData}    ${CATS} 
+
+    Então devo validar o Upload da foto com sucesso     ${respPetData}    ${petData}     

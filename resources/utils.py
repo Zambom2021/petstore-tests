@@ -1,6 +1,7 @@
 from faker import Faker
 import random
 import re
+import os
 
 fake = Faker()
 
@@ -31,8 +32,15 @@ def gera_foto_url(nome_pet):
     """
     nome_formatado = re.sub(r'[^a-zA-Z0-9]', '-', nome_pet)
     numero_aleatorio = random.randint(1000, 9999)
-    url = f"https://example.com/images/{nome_formatado}-{numero_aleatorio}.jpg"
-    return url
+    # url = f"http://localhost:8080/images/{nome_formatado}-{numero_aleatorio}.jpg"
+    # return url
+    # Caminho base local
+    base_path = r"D:\Projetos_QA\Projects_Robot\PetStore\petstore\petstore-tests\images"
+    filename = f"{nome_formatado}-{numero_aleatorio}.jpg"
+    file_path = os.path.join(base_path, filename)
+
+    return file_path
+    
 
 def gera_tags():
     tags_possiveis = ["vacina_em_dia", "amigavel", "filhote", "resgatado"]

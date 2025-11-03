@@ -1,5 +1,6 @@
 *** Settings ***
 Library    JSONLibrary
+Library    OperatingSystem
 
 *** Keywords ***
 devo validar os dados com sucesso   
@@ -107,9 +108,24 @@ devo validar a TAG no payload de resposta
 devo validar os dados alterados
     [Documentation]     Valida a alteração realizada
     [Arguments]     ${respUpdate}        ${petData}  
-    
+   
     # Valida cada campo
     Should Be Equal As Integers    ${petData['id']}         ${respUpdate["id"]} 
     Should Not Be Equal            ${petData['name']}       ${respUpdate["name"]}  
     Should Not Be Equal            ${petData['status']}     ${respUpdate["status"]} 
 
+devo validar o Upload da foto com sucesso 
+    [Documentation]     Valida o payload de resposta e o status code
+    [Arguments]       ${response}    ${petData}    
+
+    Should Be Equal As Integers   ${response["id"]}             ${petData['id']}
+    Should Be Equal               ${response["name"]}           ${petData['name']}
+    Should Not Be Equal           ${response["photoUrls"][0]}   ${petData['photoUrls'][0]}
+    
+    # Log visual da imagem no relatório
+    Log    <b>Imagem enviada para o pet ${petData['name']}:</b><br><img src="${response["photoUrls"][0]}" width="250px">    html=True
+
+devo validar a a exclusao com sucesso 
+    [Arguments]    ${message} 
+
+    Should Be Equal    ${message}    Pet deleted

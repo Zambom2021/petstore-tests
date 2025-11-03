@@ -8,7 +8,7 @@ Resource    ../../resources/assertions.robot
 Suite Setup      Dado que possua Pets Cadastrados
 
 *** Test Cases ***
-1 - Consulta lista de Pets pelo Status Pendente
+1 - Deve Consultar lista de Pets pelo Status Pendente
     [Documentation]    Realiza a Consulta de Pets pelo Status Pendente e faz a validação do corpo da resposta.
     [Tags]    1    pet    positive
 
@@ -16,7 +16,7 @@ Suite Setup      Dado que possua Pets Cadastrados
 
     Então devo validar o payload de resposta    ${respPetsData}    ${PENDING}    
 
-2 - Consulta lista de Pets pelo Status Vendido
+2 - Deve Consultar lista de Pets pelo Status Vendido
     [Documentation]    Realiza a Consulta de Pets pelo Status Vendido e faz a validação do corpo da resposta.
     [Tags]    2    pet    positive 
 
@@ -24,7 +24,7 @@ Suite Setup      Dado que possua Pets Cadastrados
 
     Então devo validar o payload de resposta    ${respPetsData}    ${SOLD}    
 
-3 - Consulta lista de Pets pelo Status Disponivel
+3 - Deve Consultar lista de Pets pelo Status Disponivel
     [Documentation]    Realiza a Consulta de Pets pelo Status Disponivel e faz a validação do corpo da resposta.
     [Tags]    3    pet    positive
 
@@ -32,7 +32,7 @@ Suite Setup      Dado que possua Pets Cadastrados
 
     Então devo validar o payload de resposta    ${respPetsData}    ${AVAILABLE}   
 
-4 - Consulta Pet pelo ID  
+4 - Deve Consultar Pet pelo ID  
     [Documentation]    Realiza a Consulta de um  Pet pelo ID e faz a validação do corpo da resposta.
     [Tags]    4    pet    positive
 
@@ -42,7 +42,7 @@ Suite Setup      Dado que possua Pets Cadastrados
 
     Então devo validar o retorno com sucesso     ${respPetData}    ${petData}   
 
-5 - Consulta Pet pelas TAGS  
+5 - Deve Consultar Pet pelas TAGS  
     [Documentation]    Realiza a Consulta de um  Pet pelas TAGS e faz a validação do corpo da resposta.
     [Tags]    5    pet    positive
 
